@@ -17,6 +17,21 @@ export default function Dashboard() {
   const [predictions, setPredictions] = useState([])
   const [loading, setLoading]         = useState(false)
   const [error, setError]             = useState(null)
+  const [weatherInfo, setWeatherInfo] = useState(null)
+
+  // Load weather forecast automatically on first render  
+  useEffect(() => {
+    fetch('/api/weather/')
+      .then(r => r.json())
+      .then(data => {
+        if (data.available) {
+          setTempMax(data.temperature_max?.toString() ?? '')
+          setPrecipMm(data.precipitation_mm?.toString() ?? '')
+          setWeatherInfo(data)
+        }
+      })
+      .catch(() => {})
+  }, [])
 
   async function fetchPredictions() {
     setLoading(true)
@@ -49,6 +64,13 @@ export default function Dashboard() {
   return (
     <>
       <h1 className="page-title">Previsión de producción</h1>
+
+      {weatherInfo?.available && (
+        <div className="alert info">
+          🌤️ Tiempo previsto para mañana: <strong>{weatherInfo.temperature_max}°C</strong>,{' '}
+          precipitación <strong>{weatherInfo.precipitation_mm} mm</strong> — cargado automáticamente.
+        </div>
+      )}
 
       {/* Filters */}
       <div className="card">
