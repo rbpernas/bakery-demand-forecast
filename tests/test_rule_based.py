@@ -32,7 +32,10 @@ def db_path():
     seed_initial_products(conn)
     conn.close()
     yield path
-    os.unlink(path)
+    try:
+        os.unlink(path)
+    except PermissionError:
+        pass
 
 
 @pytest.fixture

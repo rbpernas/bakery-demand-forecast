@@ -18,7 +18,7 @@ export async function getPredictions({ date, isHoliday, isLocalEvent, tempMax, p
   if (tempMax   != null) params.append('temperature_max', tempMax)
   if (precipMm  != null) params.append('precipitation_mm', precipMm)
 
-  const res = await fetch(`${BASE_URL}/predictions?${params}`)
+  const res = await fetch(`${BASE_URL}/predictions/?${params}`)
   if (!res.ok) throw new Error('Error fetching predictions')
   return res.json()
 }
@@ -28,13 +28,13 @@ export async function getPredictions({ date, isHoliday, isLocalEvent, tempMax, p
 // -------------------------------------------------------------------
 
 export async function getProducts() {
-  const res = await fetch(`${BASE_URL}/products`)
+  const res = await fetch(`${BASE_URL}/products/`)
   if (!res.ok) throw new Error('Error fetching products')
   return res.json()
 }
 
 export async function createProduct(payload) {
-  const res = await fetch(`${BASE_URL}/products`, {
+  const res = await fetch(`${BASE_URL}/products/`, {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify(payload),
@@ -57,7 +57,7 @@ export async function deactivateProduct(productId) {
 // -------------------------------------------------------------------
 
 export async function createLog(payload) {
-  const res = await fetch(`${BASE_URL}/logs`, {
+  const res = await fetch(`${BASE_URL}/logs/`, {
     method:  'POST',
     headers: { 'Content-Type': 'application/json' },
     body:    JSON.stringify(payload),
@@ -75,7 +75,7 @@ export async function getLogs({ dateFrom, dateTo, productId } = {}) {
   if (dateTo)    params.append('date_to', dateTo)
   if (productId) params.append('product_id', productId)
 
-  const res = await fetch(`${BASE_URL}/logs?${params}`)
+  const res = await fetch(`${BASE_URL}/logs/?${params}`)
   if (!res.ok) throw new Error('Error fetching logs')
   return res.json()
 }

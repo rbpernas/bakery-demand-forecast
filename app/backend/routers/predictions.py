@@ -35,13 +35,14 @@ def get_predictions(
     )
 
     return [
-        {
-            "product":      p.product_name,
-            "date":         p.target_date.isoformat(),
-            "units":        p.units,
-            "confidence":   p.confidence,
-            "observations": p.observations,
-            "breakdown":    p.breakdown,
-        }
-        for p in predictions
-    ]
+    {
+        "product":      p.product_name,
+        "category":     p.category,
+        "date":         p.target_date.isoformat(),
+        "units":        p.units,
+        "confidence":   p.confidence,
+        "observations": p.observations,
+        "breakdown":    p.breakdown,
+    }
+    for p in predictions
+]

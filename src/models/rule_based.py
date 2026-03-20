@@ -50,13 +50,12 @@ from src.utils.constants import (
 @dataclass
 class Prediction:
     product_name: str
+    category:     str
     target_date:  date
     units:        int
-    confidence:   str   # 'low' | 'medium' | 'high'
-    observations: int   # how many real days informed this prediction
-    breakdown:    dict  # multipliers applied, for explainability
-
-
+    confidence:   str
+    observations: int
+    breakdown:    dict
 # -------------------------------------------------------------------
 # Model
 # -------------------------------------------------------------------
@@ -119,6 +118,7 @@ class RuleBasedModel:
 
         return Prediction(
             product_name=product_name,
+            category=category,
             target_date=target_date,
             units=units,
             confidence=confidence,

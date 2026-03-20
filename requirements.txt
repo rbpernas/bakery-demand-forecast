@@ -1,27 +1,26 @@
 # Data
-pandas==2.2.2
-numpy==1.26.4
+pandas>=2.2.3
+numpy>=2.0.0
 
 # ML (phase 2)
-scikit-learn==1.4.2
-lightgbm==4.3.0
-prophet==1.1.5
+scikit-learn>=1.5.0
+lightgbm>=4.5.0
 
 # API & backend
-fastapi==0.111.0
-uvicorn==0.29.0
-pydantic==2.7.1
+fastapi>=0.115.0
+uvicorn>=0.32.0
+pydantic>=2.9.0
 
 # Database
-sqlalchemy==2.0.30
+sqlalchemy>=2.0.36
 
 # External APIs
-requests==2.32.2
+requests>=2.32.0
 
 # Notebooks
-jupyter==1.0.0
-matplotlib==3.9.0
-seaborn==0.13.2
+jupyter>=1.1.0
+matplotlib>=3.9.0
+seaborn>=0.13.2
 
 # Testing
-pytest==8.2.0
+pytest>=8.3.0

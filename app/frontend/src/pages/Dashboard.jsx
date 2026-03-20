@@ -126,7 +126,7 @@ export default function Dashboard() {
               {predictions.map(p => (
                 <tr key={p.product}>
                   <td>{p.product}</td>
-                  <td>{categoryLabel[p.category] ?? p.category}</td>
+                  <td>{p.category ?? '—'}</td>
                   <td><span className="units">{p.units}</span></td>
                   <td>
                     <span className={`badge ${p.confidence}`}>
