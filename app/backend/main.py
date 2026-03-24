@@ -10,8 +10,7 @@ Run with:
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.backend.routers import predictions, products, logs, weather
-
+from app.backend.routers import predictions, products, logs, weather, stats, orders
 
 app = FastAPI(
     title="Bakery Demand Forecast API",
@@ -30,6 +29,10 @@ app.include_router(predictions.router, prefix="/predictions", tags=["Predictions
 app.include_router(products.router,    prefix="/products",    tags=["Products"])
 app.include_router(logs.router,        prefix="/logs",        tags=["Logs"])
 app.include_router(weather.router,     prefix="/weather",     tags=["Weather"])
+app.include_router(stats.router,       prefix="/stats",       tags=["Stats"])
+app.include_router(orders.router, prefix="/orders", tags=["Orders"])
+
+
 
 @app.get("/health")
 def health_check():

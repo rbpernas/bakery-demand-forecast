@@ -80,7 +80,35 @@ def seed_initial_products(conn: sqlite3.Connection) -> None:
 
     inserted = cursor.rowcount
     print(f"✅ Seeded {inserted} initial product(s).")
+def create_orders_tables(conn: sqlite3.Connection) -> None:
+    cursor = conn.cursor()
 
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS customers (
+            customer_id  INTEGER PRIMARY KEY AUTOINCREMENT,
+            name         TEXT    NOT NULL,
+            phone        TEXT,
+            created_at   DATE    NOT NULL DEFAULT (DATE('now'))
+        )
+    """)
+
+    cursor.execute("""
+        CREATE TABLE IF NOT EXISTS orders (
+            order_id      INTEGER PRIMARY KEY AUTOINCREMENT,
+            customer_id   INTEGER NOT NULL REFERENCES customers(customer_id),
+            product_id    INTEGER NOT NULL REFERENCES products(product_id),
+            quantity      INTEGER NOT NULL CHECK(quantity > 0),
+            order_type    TEXT    NOT NULL CHECK(order_type IN ('once', 'daily', 'weekdays', 'weekends')),
+            start_date    DATE    NOT NULL,
+            end_date      DATE,
+            is_active     BOOLEAN NOT NULL DEFAULT 1,
+            notes         TEXT,
+            created_at    DATE    NOT NULL DEFAULT (DATE('now'))
+        )
+    """)
+
+    conn.commit()
+    print("✅ Orders tables created.")
 
 def main() -> None:
     print(f"Initializing database at: {os.path.abspath(DB_PATH)}")
@@ -88,6 +116,7 @@ def main() -> None:
     try:
         create_tables(conn)
         seed_initial_products(conn)
+        create_orders_tables(conn)
         print("\n🎉 Database ready.")
     finally:
         conn.close()
